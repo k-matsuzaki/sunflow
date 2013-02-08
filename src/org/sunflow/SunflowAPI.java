@@ -436,7 +436,7 @@ public class SunflowAPI implements SunflowAPIInterface {
      * @param name instance name
      * @return the instance object associated with that name
      */
-    private final Instance lookupInstance(String name) {
+    public final Instance lookupInstance(String name) {
         return renderObjects.lookupInstance(name);
     }
 
@@ -696,5 +696,12 @@ public class SunflowAPI implements SunflowAPIInterface {
 
     public void currentFrame(int currentFrame) {
         this.currentFrame = currentFrame;
+    }
+    
+    /**
+     * @return the scene
+     */
+    public Scene getScene() {
+        return scene;
     }
 }

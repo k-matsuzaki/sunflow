@@ -9,7 +9,7 @@ import org.sunflow.system.Timer;
 import org.sunflow.system.UI;
 import org.sunflow.system.UI.Module;
 
-class LightServer {
+public class LightServer {
     // parent
     private Scene scene;
 
@@ -341,7 +341,7 @@ class LightServer {
         return giEngine.getGlobalRadiance(state);
     }
 
-    Color getIrradiance(ShadingState state, Color diffuseReflectance) {
+    public Color getIrradiance(ShadingState state, Color diffuseReflectance) {
         // no gi engine, or we have already exceeded number of available bounces
         if (giEngine == null || state.getDiffuseDepth() >= maxDiffuseDepth)
             return Color.BLACK;

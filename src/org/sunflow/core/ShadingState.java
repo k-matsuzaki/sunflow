@@ -55,7 +55,7 @@ public final class ShadingState implements Iterable<LightSample> {
 
     }
 
-    static ShadingState createState(IntersectionState istate, float rx, float ry, float time, Ray r, int i, int d, LightServer server) {
+    public static ShadingState createState(IntersectionState istate, float rx, float ry, float time, Ray r, int i, int d, LightServer server) {
         ShadingState s = new ShadingState(null, istate, r, i, d);
         s.server = server;
         s.rx = rx;

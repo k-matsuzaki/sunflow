@@ -12,7 +12,7 @@ public final class IntersectionState {
     Instance instance;
     int id;
     private final StackNode[][] stacks = new StackNode[2][MAX_STACK_SIZE];
-    Instance current;
+    public Instance current;
     long numEyeRays;
     long numShadowRays;
     long numReflectionRays;

@@ -17,7 +17,7 @@ import org.sunflow.system.UI.Module;
  */
 public class Scene {
     // scene storage
-    private LightServer lightServer;
+    public LightServer lightServer;
     private InstanceList instanceList;
     private InstanceList infiniteInstanceList;
     private Camera camera;
