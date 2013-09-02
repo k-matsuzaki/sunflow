@@ -312,6 +312,9 @@ public class Scene {
 
         // prepare lights
         createAreaLightInstances();
+        
+        // prepare ShadingState
+        ShadingState.init(options);
 
         // get acceleration structure info
         // count scene primitives
