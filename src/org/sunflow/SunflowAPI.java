@@ -1,16 +1,9 @@
 package org.sunflow;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Locale;
 
-import org.codehaus.janino.ClassBodyEvaluator;
-import org.codehaus.janino.CompileException;
-import org.codehaus.janino.Scanner;
-import org.codehaus.janino.Parser.ParseException;
-import org.codehaus.janino.Scanner.ScanException;
 import org.sunflow.core.Camera;
 import org.sunflow.core.CameraLens;
 import org.sunflow.core.Display;
@@ -572,27 +565,9 @@ public class SunflowAPI implements SunflowAPIInterface {
             Timer t = new Timer();
             UI.printInfo(Module.API, "Compiling \"" + filename + "\" ...");
             t.start();
-            try {
-                FileInputStream stream = new FileInputStream(filename);
-                api = (SunflowAPI) ClassBodyEvaluator.createFastClassBodyEvaluator(new Scanner(filename, stream), SunflowAPI.class, ClassLoader.getSystemClassLoader());
-                stream.close();
-            } catch (CompileException e) {
-                UI.printError(Module.API, "Could not compile: \"%s\"", filename);
-                UI.printError(Module.API, "%s", e.getMessage());
+            api = SunflowAPICompileUtil.compileSunflowAPIFromFile(filename);
+            if (api == null)
                 return null;
-            } catch (ParseException e) {
-                UI.printError(Module.API, "Could not compile: \"%s\"", filename);
-                UI.printError(Module.API, "%s", e.getMessage());
-                return null;
-            } catch (ScanException e) {
-                UI.printError(Module.API, "Could not compile: \"%s\"", filename);
-                UI.printError(Module.API, "%s", e.getMessage());
-                return null;
-            } catch (IOException e) {
-                UI.printError(Module.API, "Could not compile: \"%s\"", filename);
-                UI.printError(Module.API, "%s", e.getMessage());
-                return null;
-            }
             t.end();
             UI.printInfo(Module.API, "Compile time: " + t.toString());
             // allow relative paths
@@ -661,26 +636,7 @@ public class SunflowAPI implements SunflowAPIInterface {
      *         otherwise.
      */
     public static SunflowAPI compile(String code) {
-        try {
-            Timer t = new Timer();
-            t.start();
-            SunflowAPI api = (SunflowAPI) ClassBodyEvaluator.createFastClassBodyEvaluator(new Scanner(null, new StringReader(code)), SunflowAPI.class, (ClassLoader) null);
-            t.end();
-            UI.printInfo(Module.API, "Compile time: %s", t.toString());
-            return api;
-        } catch (CompileException e) {
-            UI.printError(Module.API, "%s", e.getMessage());
-            return null;
-        } catch (ParseException e) {
-            UI.printError(Module.API, "%s", e.getMessage());
-            return null;
-        } catch (ScanException e) {
-            UI.printError(Module.API, "%s", e.getMessage());
-            return null;
-        } catch (IOException e) {
-            UI.printError(Module.API, "%s", e.getMessage());
-            return null;
-        }
+        return SunflowAPICompileUtil.compileSunflowAPI(code);
     }
 
     /**
